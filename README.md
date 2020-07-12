@@ -1,11 +1,5 @@
-<img src="branding/logo.png" align="right" height="90" />
-
-# rAthena
-[![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena) [![Build status](https://ci.appveyor.com/api/projects/status/8574b8nlwd57loda/branch/master?svg=true)](https://ci.appveyor.com/project/rAthenaAPI/rathena/branch/master) [![Total alerts](https://img.shields.io/lgtm/alerts/g/rathena/rathena.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/rathena/rathena/alerts/) [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/rathena/rathena.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/rathena/rathena/context:cpp) ![GitHub](https://img.shields.io/github/license/rathena/rathena.svg) ![GitHub repo size](https://img.shields.io/github/repo-size/rathena/rathena.svg)
-> rAthena is a collaborative software development project revolving around the creation of a robust massively multiplayer online role playing game (MMORPG) server package. Written in C, the program is very versatile and provides NPCs, warps and modifications. The project is jointly managed by a group of volunteers located around the world as well as a tremendous community providing QA and support. rAthena is a continuation of the eAthena project.
-
-[Forum](https://rathena.org/board)|[Discord](https://rathena.org/discord)|[Wiki](https://github.com/rathena/rathena/wiki)|[FluxCP](https://github.com/rathena/FluxCP)|[Crowdfunding](https://rathena.org/board/crowdfunding/)|[Fork and Pull Request Q&A](https://rathena.org/board/topic/86913-pull-request-qa/)
---------|--------|--------|--------|--------|--------
+# Server
+> This package is a server generated using rAthena. Instructions for this server taken originally from https://rathena.org/board/topic/114177-tutorial-how-to-create-server-client-2018-step-by-step-debian-linux/
 
 ### Table of Contents
 1. [Prerequisites](#1-prerequisites)
@@ -51,22 +45,70 @@ Database | [MySQL Workbench 5 or newer](http://www.mysql.com/downloads/workbench
   * [Debian](https://github.com/rathena/rathena/wiki/Install-on-Debian)
   * [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
 
-## 3. Troubleshooting
+## 3. After Install
 
-If you're having problems with starting your server, the first thing you should
-do is check what's happening on your consoles. More often that not, all support issues
-can be solved simply by looking at the error messages given. Check out the [wiki](https://github.com/rathena/rathena/wiki)
-or [forums](https://rathena.org/forum) if you need more support on troubleshooting.
+After following the instructions above, you need to update the rAthena configs.
 
-## 4. More Documentation
-rAthena has a large collection of help files and sample NPC scripts located in the /doc/
-directory. These include detailed explanations of NPC script commands, atcommands (@),
-group permissions, item bonuses, and packet structures, among many other topics. We
-recommend that all users take the time to look over this directory before asking for
-assistance elsewhere.
+> rAthena/conf/inter_athena.conf
 
-## 5. How to Contribute
-Details on how to contribute to rAthena can be found in [CONTRIBUTING.md](https://github.com/rathena/rathena/blob/master/.github/CONTRIBUTING.md)!
+```
 
-## 6. License
-Copyright (c) rAthena Development Team - Licensed under [GNU General Public License v3.0](https://github.com/rathena/rathena/blob/master/LICENSE)
+// MySQL Login server
+login_server_ip: 127.0.0.1
+login_server_port: 3306
+login_server_id: ragnarok
+login_server_pw: password123 <---- CHANGE THIS TO YOUR DB USER AND PW!
+login_server_db: ragnarok
+login_codepage:
+login_case_sensitive: no
+
+ipban_db_ip: 127.0.0.1
+ipban_db_port: 3306
+ipban_db_id: ragnarok
+ipban_db_pw: password123 <---- CHANGE THIS TO YOUR DB USER AND PW!
+ipban_db_db: ragnarok
+ipban_codepage:
+
+// MySQL Character server
+char_server_ip: 127.0.0.1
+char_server_port: 3306
+char_server_id: ragnarok
+char_server_pw: password123 <---- CHANGE THIS TO YOUR DB USER AND PW!
+char_server_db: ragnarok
+
+// MySQL Map Server
+map_server_ip: 127.0.0.1
+map_server_port: 3306
+map_server_id: ragnarok
+map_server_pw: password123 <---- CHANGE THIS TO YOUR DB USER AND PW!
+map_server_db: ragnarok
+
+// MySQL Log Database
+log_db_ip: 127.0.0.1
+log_db_port: 3306
+log_db_id: ragnarok
+log_db_pw: password123 <---- CHANGE THIS TO YOUR DB USER AND PW!
+log_db_db: ragnarok
+log_codepage:
+log_login_db: loginlog
+```
+
+>rAthena/conf/char_athena.conf
+```
+char_ip: 192.168.111.133 <-- CHANGE THIS TO YOUR VM IP ADDRESS!
+```
+
+>rAthena/conf/map_athena.conf
+```
+map_ip: 192.168.111.133 <-- CHANGE THIS TO YOUR VM IP ADDRESS!
+```
+
+After updating all of that, you should be able to recompile and start the server!
+
+```
+./configure --enable-packetver=20180418
+make clean
+make server
+
+./athena-start start
+```
